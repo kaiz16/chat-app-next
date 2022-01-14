@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-animated {
+    background: linear-gradient(
+      to right,
+      #fff 20%,
+      #dd6164 40%,
+      #dd6164 60%,
+      #fff 80%
+    );
+    @apply bg-[length:200%_auto] text-dark bg-clip-text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 1s linear infinite;
+  }
+  @keyframes shine {
+    to {
+      @apply bg-[200%_center];
+    }
+  }
+}
+
+/* 
+} */

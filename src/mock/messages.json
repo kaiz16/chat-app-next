@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "type": "Message",
+        "message": "Hey User A",
+        "conversation": {
+            "id": 1,
+            "type": "Individual",
+            "name": "User B"
+        },
+        "user": {
+            "name": "User B",
+            "email": "userb@gmail.com",
+            "id": 2
+        }
+    },
+    {
+        "id": 2,
+        "type": "Message",
+        "message": "Hey User B",
+        "conversation": {
+            "id": 1,
+            "type": "Individual",
+            "name": "User B"
+        },
+        "user": {
+            "name": "User A",
+            "email": "userA@gmail.com",
+            "id": 2
+        }
+    },
+    {
+        "id": 2,
+        "type": "Message",
+        "message": "What's up?",
+        "conversation": {
+            "id": 1,
+            "type": "Individual",
+            "name": "User B"
+        },
+        "user": {
+            "name": "User A",
+            "email": "userA@gmail.com",
+            "id": 2
+        }
+    }
+]
