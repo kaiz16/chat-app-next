@@ -1,10 +1,10 @@
 import { reactive } from "@vue/reactivity";
 import users from "@/mock/users.json";
 export const state = reactive({
-  isAuthenticated: false,
+  isAuthenticated: true,
   loading: false,
   user: {},
-  login({ email }) {
+  login({ email, password }) {
     const user = users.filter((user) => user.email === email)[0];
     if (user) {
       this.isAuthenticated = true;
@@ -21,6 +21,6 @@ export const state = reactive({
   },
   logout() {
     this.isAuthenticated = false;
-    this.user = null;
+    this.user = {};
   },
 });

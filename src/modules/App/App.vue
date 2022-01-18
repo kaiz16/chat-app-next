@@ -38,10 +38,12 @@ body,
 }
 #navbar {
   height: 10%;
+  width: 100%;
   max-height: 10%;
 }
 #content {
   height: 90%;
+  width: 100%;
   max-height: 90%;
 }
 </style>

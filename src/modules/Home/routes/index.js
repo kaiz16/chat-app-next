@@ -6,6 +6,7 @@ const HomeRoutes = [
       {
         path: "",
         name: "Home",
+        redirect: "/chat",
         component: () => import("../pages/Home.page.vue"),
         meta: {
           requiresAuth: true,

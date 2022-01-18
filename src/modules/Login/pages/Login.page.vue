@@ -1,25 +1,23 @@
 <template>
-  <section class="min-w-full min-h-full flex items-center justify-center">
-    <div class="flex flex-col items-center justify-center">
-      <div class="self-start" style="">
-        <h1 class="text-7xl font-semibold">Login</h1>
-      </div>
-      <FormInput
-        v-model="email"
-        label="Email"
-        placeholder="Email Address"
-        type="text"
-      />
-      <FormInput
-        v-model="password"
-        label="Password"
-        placeholder="Password"
-        type="password"
-      />
-      <Button class="btn-primary mt-2 self-end" @click="login">
-        <p>Submit</p>
-      </Button>
-    </div>
+  <section
+    class="sm:w-full md:w-1/3 md:mx-auto min-h-full p-4 flex flex-col items-center justify-center"
+  >
+    <h1 class="text-7xl font-semibold self-start">Login</h1>
+    <FormInput
+      v-model="email"
+      label="Email"
+      placeholder="Email Address"
+      type="text"
+    />
+    <FormInput
+      v-model="password"
+      label="Password"
+      placeholder="Password"
+      type="password"
+    />
+    <Button class="btn-primary mt-2 self-end" @click="login">
+      <p>Submit</p>
+    </Button>
   </section>
 </template>
 
@@ -37,9 +35,9 @@ export default {
   setup() {
     let email = ref("");
     let password = ref("");
-    function login() {
-      appState.login({ email: email.value });
-    }
+    const login = async () => {
+      await appState.login({ email: email.value, password: password.value });
+    };
     return {
       login,
       email,
