@@ -5,19 +5,18 @@
   </div>
 </template>
 <script>
+import { onMounted } from "@vue/runtime-core";
 import NavBar from "./components/Navbar.vue";
 import { state } from "./states";
-import { useRouter } from "vue-router";
-
 export default {
   components: {
     NavBar,
   },
   setup() {
-    const router = useRouter();
-
+    onMounted(async () => {
+      await state.getCurrentUser();
+    });
     return {
-      router,
       state,
     };
   },

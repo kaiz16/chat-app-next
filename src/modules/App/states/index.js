@@ -1,26 +1,86 @@
-import { reactive } from "@vue/reactivity";
+import {  ref, reactive } from "@vue/reactivity";
 import users from "@/mock/users.json";
+import axios from "axios";
 export const state = reactive({
-  isAuthenticated: true,
-  loading: false,
+  isAuthenticated: false,
+  loading: true,
   user: {},
-  login({ email, password }) {
-    const user = users.filter((user) => user.email === email)[0];
-    if (user) {
+  getToken() {
+    return localStorage.getItem("TOKEN");
+  },
+  setToken(token) {
+    localStorage.setItem("TOKEN", token);
+  },
+  clearToken() {
+    localStorage.removeItem("TOKEN");
+  },
+  async getCurrentUser() {
+    this.loading = true;
+    try {
+      const { data } = await axios.get(
+        process.env.VUE_APP_API_ENDPOINT + "/users/whoami",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: this.getToken(),
+          },
+        }
+      );
       this.isAuthenticated = true;
-      this.user = user;
+      this.user = data;
+    } catch (error) {
+      console.log(error.response);
+    } finally {
+      this.loading = false;
     }
   },
-  register({ name, email }) {
-    const user = users.filter((user) => user.email === email)[0];
-    if (!user) {
-      users.push({ name, email, id: new Date().toISOString() });
+  async login({ email, password }) {
+    try {
+      const { data } = await axios.post(
+        process.env.VUE_APP_API_ENDPOINT + "/users/login",
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      this.setToken(data.jwt);
       this.isAuthenticated = true;
-      this.user = user;
+    } catch (error) {
+      console.log(error.response);
+    } finally {
+    }
+  },
+  async register({ name, username, email, password }) {
+    try {
+      const { data } = await axios.post(
+        process.env.VUE_APP_API_ENDPOINT + "/users/register",
+        {
+          name,
+          username,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      this.setToken(data.jwt);
+      this.isAuthenticated = true;
+    } catch (error) {
+      console.log(error.response);
+    } finally {
     }
   },
   logout() {
     this.isAuthenticated = false;
     this.user = {};
+    this.clearToken();
   },
 });

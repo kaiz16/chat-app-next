@@ -11,6 +11,12 @@
       type="text"
     />
     <FormInput
+      v-model="username"
+      label="Username"
+      placeholder="Username"
+      type="text"
+    />
+    <FormInput
       v-model="password"
       label="Password"
       placeholder="Password"
@@ -33,19 +39,30 @@ export default {
     FormInput,
     Button,
   },
-  setup() {
-    let name = ref("");
-    let email = ref("");
-    let password = ref("");
-    function register() {
-      appState.register({
-        name: name.value,
-        email: email.value,
-      });
+  beforeRouteEnter(to, from, next) {
+    if (appState.isAuthenticated) {
+      next("/");
     }
+    next();
+  },
+  setup() {
+    const name = ref("");
+    const username = ref("");
+    const email = ref("");
+    const password = ref("");
+    const register = async () => {
+      await appState.register({
+        name: name.value,
+        username: username.value,
+        email: email.value,
+        password: password.value,
+      });
+      router.push("/");
+    };
     return {
       register,
       name,
+      username,
       email,
       password,
     };

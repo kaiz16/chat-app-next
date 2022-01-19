@@ -1,31 +1,31 @@
 import { state } from "../states";
 import { watchEffect } from "@vue/runtime-core";
 export const routeGuard = (to, from, next) => {
-  const { isAuthenticated, loading } = state;
-
-  const verify = () => {
-    // Pages that do not require auth
-    if (!to.meta.requiresAuth) {
-      return next();
-    }
+  const verify = async () => {
+    // console.log("TO", to.path);
+    // console.log("FROM", from.path);
+    // console.log("Auth", state.isAuthenticated);
     /* 
     If user is not logged-in,
     and the page is restricted to logged-in user only,
     redirect user to LOGIN page.
     */
-    if (!isAuthenticated && to.meta.requiresAuth) {
+    if (!state.isAuthenticated && to.meta.requiresAuth) {
       return next("/login");
-    }
-
-    // If user is logged-in...
-    if (isAuthenticated) {
-      return next();
     }
 
     return next();
   };
 
+  // verify();
+  // watch(state, (newState, oldState) => {
+  //   if (!state.loading && oldState.loading) {
+  //     console.log("Loading", state.loading);
+  //     return verify();
+  //   }
+  // });
+
   watchEffect(() => {
-    if (!loading) return verify();
+    if (!state.loading) return verify();
   });
 };

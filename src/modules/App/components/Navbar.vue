@@ -8,26 +8,12 @@
       <div class="hidden px-2 mx-2 navbar-center lg:flex">
         <div class="flex items-stretch">
           <router-link
-            v-if="appState.isAuthenticated"
-            :to="{ name: 'Home' }"
+            v-for="(menu, index) in menus"
+            :key="index"
+            :to="menu.to"
+            v-show="menu.enabled"
             class="btn btn-ghost btn-sm rounded-btn"
-            >Home</router-link
-          >
-          <router-link
-            v-if="appState.isAuthenticated"
-            :to="{ name: 'Chat' }"
-            class="btn btn-ghost btn-sm rounded-btn"
-            >Chat</router-link
-          >
-          <router-link
-            :to="{ name: 'Register' }"
-            class="btn btn-ghost btn-sm rounded-btn"
-            >Sign up</router-link
-          >
-          <router-link
-            :to="{ name: 'Login' }"
-            class="btn btn-ghost btn-sm rounded-btn"
-            >Login</router-link
+            >{{ menu.label }}</router-link
           >
         </div>
       </div>
@@ -97,30 +83,12 @@
           class="bg-dark h-full text-white p-4 flex flex-col items-start overflow-y-auto"
         >
           <router-link
-            v-if="appState.isAuthenticated"
-            :to="{ name: 'Home' }"
+            v-for="(menu, index) in menus"
+            :key="index"
+            :to="menu.to"
+            v-show="menu.enabled"
             class="btn btn-ghost btn-lg rounded-btn"
-            @click="drawerOpen = false"
-            >Home</router-link
-          >
-          <router-link
-            v-if="appState.isAuthenticated"
-            :to="{ name: 'Chat' }"
-            class="btn btn-ghost btn-lg rounded-btn"
-            @click="drawerOpen = false"
-            >Chat</router-link
-          >
-          <router-link
-            :to="{ name: 'Register' }"
-            class="btn btn-ghost btn-lg rounded-btn"
-            @click="drawerOpen = false"
-            >Sign up</router-link
-          >
-          <router-link
-            :to="{ name: 'Login' }"
-            class="btn btn-ghost btn-lg rounded-btn"
-            @click="drawerOpen = false"
-            >Login</router-link
+            >{{ menu.label }}</router-link
           >
         </div>
       </div>
@@ -130,14 +98,38 @@
 
 <script>
 import { state as appState } from "@/modules/App/states";
-import { ref } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 export default {
   name: "NavBar",
   setup() {
     const drawerOpen = ref(false);
+    const menus = computed(() => {
+      return [
+        {
+          label: "Chat",
+          to: "/chat",
+          enabled: appState.isAuthenticated,
+        },
+        {
+          label: "Login",
+          to: "/login",
+          enabled: !appState.isAuthenticated,
+        },
+        {
+          label: "signup",
+          to: "/register",
+          enabled: !appState.isAuthenticated,
+        },
+        {
+          label: "Logout",
+          to: "/logout",
+          enabled: appState.isAuthenticated,
+        },
+      ];
+    });
     return {
-      appState,
       drawerOpen,
+      menus,
     };
   },
 };

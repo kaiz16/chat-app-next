@@ -26,17 +26,26 @@ import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import { ref } from "@vue/reactivity";
 import { state as appState } from "@/modules/App/states";
+import { useRouter } from "vue-router";
 export default {
   name: "LoginPage",
   components: {
     FormInput,
     Button,
   },
+  beforeRouteEnter(to, from, next) {
+    if (appState.isAuthenticated) {
+      next("/");
+    }
+    next();
+  },
   setup() {
-    let email = ref("");
-    let password = ref("");
+    const email = ref("");
+    const password = ref("");
+    const router = useRouter();
     const login = async () => {
       await appState.login({ email: email.value, password: password.value });
+      router.push("/");
     };
     return {
       login,
