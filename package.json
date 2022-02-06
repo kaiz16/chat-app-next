@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@heroicons/vue": "^1.0.5",
     "@tailwindcss/line-clamp": "^0.3.0",
     "axios": "^0.25.0",
     "core-js": "^3.8.3",

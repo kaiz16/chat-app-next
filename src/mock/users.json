@@ -1,17 +1,37 @@
 [
     {
         "name": "User A",
+        "username": "usera",
         "email": "usera@gmail.com",
+        "password": "1234",
         "id": 1
     },
     {
         "name": "User B",
+        "username": "userb",
         "email": "userb@gmail.com",
+        "password": "1234",
         "id": 2
     },
     {
         "name": "User C",
+        "username": "userc",
         "email": "userc@gmail.com",
+        "password": "1234",
         "id": 3
+    },
+    {
+        "name": "User D",
+        "username": "userd",
+        "email": "userd@gmail.com",
+        "password": "1234",
+        "id": 4
+    },
+    {
+        "name": "User E",
+        "username": "usere",
+        "email": "usere@gmail.com",
+        "password": "1234",
+        "id": 5
     }
 ]

@@ -33,6 +33,7 @@ import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import { ref } from "@vue/reactivity";
 import { state as appState } from "@/modules/App/states";
+import { useRouter } from 'vue-router';
 export default {
   name: "RegisterPage",
   components: {
@@ -46,6 +47,7 @@ export default {
     next();
   },
   setup() {
+    const router = useRouter()
     const name = ref("");
     const username = ref("");
     const email = ref("");

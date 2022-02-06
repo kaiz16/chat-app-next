@@ -1,5 +1,4 @@
-import {  ref, reactive } from "@vue/reactivity";
-import users from "@/mock/users.json";
+import { reactive } from "@vue/reactivity";
 import axios from "axios";
 export const state = reactive({
   isAuthenticated: false,

@@ -12,9 +12,7 @@
       class="absolute transition-all inset-y-0 right-0 mr-6 flex items-center"
       :class="msg ? 'scale-1' : 'scale-0'"
     >
-      <p class="text-dark font-medium cursor-pointer text-sm">
-        Send
-      </p>
+      <p class="text-dark font-medium cursor-pointer text-sm">Send</p>
     </div>
   </div>
 </template>
@@ -23,19 +21,20 @@
 import { ref } from "@vue/reactivity";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
+import { state } from "../states";
 export default {
   name: "ComposeVue",
   components: {
     FormInput,
     Button,
   },
-  emits: ["sendMessage"],
   setup(Props, Context) {
     let msg = ref("");
-    function send() {
-      console.log("Send");
-      Context.emit("sendMessage", msg.value);
-    }
+    const send = async () => {
+      if (!msg.value) return;
+      state.sendMessage(msg.value);
+      msg.value = "";
+    };
     return {
       msg,
       send,
