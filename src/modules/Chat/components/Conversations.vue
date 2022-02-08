@@ -26,7 +26,7 @@
 
 <script>
 import conversations from "@/mock/conversations";
-import Conversation from "@/components/Conversation.vue";
+import Conversation from "./Conversation.vue";
 import Button from "@/components/Button.vue";
 import NewConversation from "./NewConversation.vue";
 import { InboxIcon } from "@heroicons/vue/outline";

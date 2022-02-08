@@ -1,12 +1,17 @@
 <template>
-  <div class="form-control w-full">
-    <label class="label" v-if="label">
-      <span class="label-text">{{ label }}</span>
+  <div class="p-0 border-none relative">
+    <label v-if="label" class="block text-sm mb-1 font-medium">
+      {{ label }}
     </label>
+    <div
+      v-if="$slots['icon']"
+      class="absolute inset-y-0 left-0 mt-6 ml-2 flex items-center pointer-events-none text-black/50"
+    >
+      <slot name="icon"></slot>
+    </div>
     <input
-      :type="type"
-      :placeholder="placeholder"
-      class="input input-bordered"
+      class="focus:ring-dark focus:border-dark block w-full py-2 px-4 sm:text-sm border-dark border-2 rounded-md"
+      :class="{ 'pl-10': $slots['icon'] }"
       v-bind="$attrs"
       v-model="value"
     />
@@ -15,37 +20,26 @@
 
 <script>
 export default {
-  name: "FormInput",
   props: {
+    label: {
+      type: String,
+      default: () => "",
+    },
     modelValue: {
       type: [String, Number],
       required: true,
-    },
-    label: {
-      type: String,
-      default: () => undefined,
-    },
-    placeholder: {
-      type: String,
-      default: () => undefined,
-    },
-    type: {
-      type: String,
-      default: () => undefined,
     },
   },
   emits: ["update:modelValue"],
   computed: {
     value: {
-      get(){
-        return this.modelValue
+      set(val) {
+        this.$emit("update:modelValue", val);
       },
-      set(val){
-        this.$emit("update:modelValue", val)
-      }
-    }
-  }
+      get() {
+        return this.modelValue;
+      },
+    },
+  },
 };
 </script>
-
-<style></style>

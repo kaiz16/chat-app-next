@@ -1,10 +1,10 @@
 <template>
   <div
-    class="mb-3 conversation flex items-center hover:bg-oxford-blue-500 px-2 py-3 rounded-3xl cursor-pointer transition-colors duration-500"
+    class="mb-3 flex items-center card hover:card-hover"
     @click="$emit('click')"
   >
-    <Avatar :name="name" :image="image" />
-    <div class="last-message ml-2">
+    <Avatar :name="name" :image="image" class="w-10 h-10 flex-shrink-0" />
+    <div class="ml-2">
       <p class="font-semibold">{{ name }}</p>
       <p class="line-clamp-1 text-sm">
         {{ message }}
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Avatar from "./Avatar.vue";
+import Avatar from "@/components/Avatar.vue";
 export default {
   name: "ConversationVue",
   props: {

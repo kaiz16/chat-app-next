@@ -36,13 +36,13 @@ body,
   /* @apply text-white; */
 }
 #navbar {
-  height: 10%;
+  height: 8%;
   width: 100%;
-  max-height: 10%;
+  max-height: 8%;
 }
 #content {
-  height: 90%;
+  height: 92%;
   width: 100%;
-  max-height: 90%;
+  max-height: 92%;
 }
 </style>

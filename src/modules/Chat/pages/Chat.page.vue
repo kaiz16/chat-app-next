@@ -10,52 +10,21 @@
       <ConversationInfo />
     </div>
   </section>
+
   <section class="lg:hidden min-w-full flex flex-col h-full">
     <div
       class="flex flex-col h-full w-full border-dark border-r-2 overflow-y-auto"
-      v-if="activeTab === 0"
     >
-      <Conversations />
+      <component :is="currentComponent" />
     </div>
     <div
-      class="flex flex-col h-full w-full border-dark border-r-2 overflow-y-auto"
-      v-if="activeTab === 1"
+      class="mt-auto justify-center border-t rounded-none border-oxford-blue-500"
     >
-      <SelectedConversation />
-    </div>
-    <div
-      class="flex flex-col h-full w-full border-dark border-r-2 overflow-y-auto"
-      v-if="activeTab === 2"
-    >
-      <ConversationInfo />
-    </div>
-    <div
-      class="tabs tabs-boxed mt-auto justify-center border-t rounded-none border-oxford-blue-500 bg-white shadow-2xl space-x-2"
-    >
-      <a
-        class="tab tab-lg text-xs font-medium rounded-lg flex flex-col"
-        :class="activeTab === 0 ? 'text-dark' : 'text-oxford-blue-500'"
-        @click="activeTab = 0"
-      >
-        <UsersIcon class="h-6 w-6" />
-        <p>People</p>
-      </a>
-      <a
-        class="tab tab-lg text-xs font-medium rounded-lg flex flex-col"
-        :class="activeTab === 1 ? 'text-dark' : 'text-oxford-blue-500'"
-        @click="activeTab = 1"
-      >
-        <ChatAlt2Icon class="h-6 w-6" />
-        <p>Chat</p>
-      </a>
-      <a
-        class="tab tab-lg text-xs font-medium rounded-lg flex flex-col"
-        :class="activeTab === 2 ? 'text-dark' : 'text-oxford-blue-500'"
-        @click="activeTab = 2"
-      >
-        <InformationCircleIcon class="h-6 w-6" />
-        <p>Info</p>
-      </a>
+      <Tabs
+        @change="activeTab = $event"
+        :activeTab="activeTab"
+        :tabs="tabs"
+      />
     </div>
   </section>
 </template>
@@ -69,6 +38,10 @@ import {
   ChatAlt2Icon,
   InformationCircleIcon,
 } from "@heroicons/vue/solid";
+import Tabs from "@/components/Tabs.vue";
+import { markRaw, ref } from "@vue/reactivity";
+import { computed, watchEffect } from "@vue/runtime-core";
+import { state } from "../states";
 export default {
   name: "ChatPage",
   components: {
@@ -78,10 +51,43 @@ export default {
     UsersIcon,
     ChatAlt2Icon,
     InformationCircleIcon,
+    Tabs,
   },
-  data() {
+  setup() {
+    const activeTab = ref(0);
+    const tabs = ref([
+      {
+        icon: UsersIcon,
+        label: "People",
+        disabled: false,
+        component: markRaw(Conversations),
+      },
+      {
+        icon: ChatAlt2Icon,
+        label: "Chat",
+        disabled: false,
+        component: markRaw(SelectedConversation),
+      },
+      {
+        icon: InformationCircleIcon,
+        label: "Info",
+        disabled: false,
+        component: markRaw(ConversationInfo),
+      },
+    ]);
+    const currentComponent = computed(() => {
+      return tabs.value[activeTab.value].component;
+    });
+
+    watchEffect(() => {
+      if (state.selectedConversation?._id) {
+        activeTab.value = 1;
+      }
+    });
     return {
-      activeTab: 0,
+      activeTab,
+      tabs,
+      currentComponent,
     };
   },
 };

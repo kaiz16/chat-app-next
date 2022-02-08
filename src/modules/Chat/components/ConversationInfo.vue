@@ -8,7 +8,7 @@
       v-for="user in selectedConversation.participants"
       :key="user.id"
     >
-      <Avatar :name="user.name" :image="user.image" />
+      <Avatar :name="user.name" :image="user.image" class="w-10 h-10 flex-shrink-0"  />
       <div class="ml-2">
         <p class="font-semibold">{{ user.name }}</p>
         <p class="line-clamp-1 text-sm">

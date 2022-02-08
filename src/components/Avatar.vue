@@ -1,14 +1,19 @@
 <template>
-  <div class="avatar placeholder">
+  <div class="inline-flex relative">
     <div
-      class="bg-dark text-white rounded-full"
-      :class="`w-${width} h-${height}`"
+      class="bg-dark text-white rounded-full flex items-center justify-center w-full h-full"
     >
-      <img v-if="image" :src="image" alt="Avatar image" />
+      <img
+        v-if="image"
+        width="100"
+        height="100"
+        class="rounded-full"
+        :src="image"
+        alt="Avatar image"
+      />
       <span v-else>{{ initials }}</span>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -16,14 +21,6 @@ import { computed } from "@vue/reactivity";
 export default {
   name: "AvatarVue",
   props: {
-    width: {
-      type: String,
-      default: () => "10",
-    },
-    height: {
-      type: String,
-      default: () => "10",
-    },
     image: {
       type: String,
       default: () => "",

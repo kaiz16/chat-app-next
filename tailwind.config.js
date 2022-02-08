@@ -3,7 +3,7 @@ const Colors = {
   current: "currentColor",
   white: "#ffffff",
   whitesmoke: "#f8f8f9",
-  black: "000",
+  black: "#000000",
   snow: {
     100: "#fbf6f4",
     200: "#fcf7f5",
@@ -46,7 +46,11 @@ const Colors = {
 };
 
 module.exports = {
-  content: ["./public/index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  mode: 'jit',
+  content: [
+    './public/**/*.html',
+    './src/**/*.{js,jsx,ts,tsx,vue}',
+  ],
   options: {
     safelist: [/data-theme$/],
   },
@@ -62,41 +66,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("daisyui"),
     require('@tailwindcss/line-clamp'),
   ],
-  daisyui: {
-    styled: true,
-    themes: [
-      {
-        white: {
-          primary: Colors.red,
-          "primary-focus": Colors["rusty-red"][100],
-          "primary-content": Colors.white,
-          secondary: Colors.blue,
-          "secondary-focus": Colors["blue-green"][100],
-          "secondary-content": Colors.white,
-          accent: Colors.yellow,
-          "accent-focus": Colors.fulvous[100],
-          "accent-content": Colors.white,
-          neutral: Colors.dark,
-          "neutral-focus": Colors["oxford-blue"][100],
-          "neutral-content": Colors.dark,
-          // base: Colors.white,
-          "base-100": Colors.white,
-          "base-200": Colors.snow[200],
-          "base-300": Colors.snow[300],
-          "base-content": Colors.dark,
-          info: Colors.blue,
-          success: Colors.blue,
-          warning: Colors.yellow,
-          error: Colors.red,
-        },
-      },
-    ],
-    base: true,
-    utils: true,
-    logs: true,
-    rtl: false,
-  },
 };

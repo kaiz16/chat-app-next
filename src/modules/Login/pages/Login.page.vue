@@ -8,12 +8,14 @@
       label="Email"
       placeholder="Email Address"
       type="text"
+      class="w-full mt-2"
     />
     <FormInput
       v-model="password"
       label="Password"
       placeholder="Password"
       type="password"
+      class="w-full mt-2"
     />
     <Button class="btn-primary mt-2 self-end" @click="login">
       <p>Submit</p>

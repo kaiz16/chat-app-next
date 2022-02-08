@@ -9,7 +9,7 @@
         v-for="message in messages"
         :key="message.id"
       >
-        <Avatar :name="message.sender.name" />
+        <Avatar :name="message.sender.name" class="w-10 h-10 flex-shrink-0" />
         <div class="flex flex-col ml-2 max-w-[50%]">
           <Message :message="message.text"></Message>
         </div>
@@ -25,10 +25,10 @@
     <div>
       <h1 class="text-4xl mb-5 font-semibold">
         You don’t have a <br />
-        message selected
+        chat selected
       </h1>
       <p>
-        Choose one from your existing messages, or <br />
+        Choose one from your existing chats, or <br />
         start a new one.
       </p>
       <Button

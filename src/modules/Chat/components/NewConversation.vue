@@ -3,50 +3,51 @@
     v-model="modelValue"
     @update:modelValue="$emit('update:modelValue', $event)"
     customClass="h-[700px]"
+    title="New Message"
   >
-    <template #header>
-      <h1 class="text-2xl font-semibold">New Message</h1>
-      <Button
-        @click="createConversation()"
-        class="btn bg-dark text-snow-500 text-xs ml-auto"
-      >
-        <p>Done</p>
-      </Button>
-    </template>
-    <FormInput v-model="search" placeholder="Search people" />
+    <FormInput
+      v-model="search"
+      label="Search"
+      placeholder="Search people"
+      class="mt-2"
+    >
+      <template #icon>
+        <SearchIcon class="w-6 h-6" />
+      </template>
+    </FormInput>
     <FormInput
       v-if="selectedUsers.length"
       v-model="nickname"
       label="Nickname"
-      placeholder="Name of the converation"
+      placeholder="Name your chat"
+      class="mt-2"
     />
 
     <div class="flex flex-wrap mt-2">
-      <div
-        class="badge badge-dark p-3 text-white flex mr-2 my-2"
+      <Avatar
+        @click="deselectUser(user)"
+        :name="user.name"
+        :image="user.image"
         v-for="user in selectedUsers"
         :key="user._id"
-      >
-        <p class="mx-2">{{ user.name }}</p>
-        <XIcon
-          @click="deselectUser(user)"
-          class="inline-block w-4 h-4 cursor-pointer"
-        />
-      </div>
+        class="flex-shrink-0 w-10 h-10 cursor-pointer"
+      />
     </div>
     <div class="mt-2">
       <div
-        class="flex w-full mt-2 px-2 py-3 rounded-3xl cursor-pointer transition-all duration-500 hover:bg-oxford-blue-500"
+        class="flex w-full mt-2 card hover:card-hover"
         v-for="user in searchUsersResult"
         :key="user._id"
         @click="selectUser(user)"
         :class="{
-          'bg-oxford-blue-500': !!selectedUsers.filter(
-            (u) => u._id === user._id
-          )[0],
+          'card-hover': !!selectedUsers.filter((u) => u._id === user._id)[0],
         }"
       >
-        <Avatar :name="user.name" :image="user.image" class="flex-shrink-0" />
+        <Avatar
+          :name="user.name"
+          :image="user.image"
+          class="flex-shrink-0 w-10 h-10"
+        />
         <div class="ml-2">
           <p class="font-semibold">{{ user.name }}</p>
           <p class="line-clamp-1 text-sm">
@@ -55,17 +56,23 @@
         </div>
       </div>
     </div>
-    <div class="mt-2"></div>
+    <template #footer>
+      <Button
+        @click="createConversation()"
+        class="btn bg-dark text-snow-500 text-xs ml-auto"
+      >
+        <p>Done</p>
+      </Button>
+    </template>
   </Modal>
 </template>
 
 <script>
 import Modal from "@/components/Modal.vue";
 import FormInput from "@/components/FormInput.vue";
-import Dropdown from "@/components/Dropdown.vue";
 import Avatar from "@/components/Avatar.vue";
 import Button from "@/components/Button.vue";
-import { XIcon } from "@heroicons/vue/outline";
+import { SearchIcon, XIcon } from "@heroicons/vue/outline";
 import { computed, ref } from "@vue/reactivity";
 import { watchEffect } from "@vue/runtime-core";
 import { state } from "../states";
@@ -80,10 +87,10 @@ export default {
   components: {
     Modal,
     FormInput,
-    Dropdown,
     Avatar,
     Button,
     XIcon,
+    SearchIcon
   },
   setup(Props, Context) {
     const search = ref("");
@@ -117,7 +124,7 @@ export default {
     const createConversation = async () => {
       // Verify
       if (!nickname.value) {
-        alert("Please fill the name of the conversation.");
+        alert("Please name your chat.");
         return;
       }
       const participantIDs = selectedUsers.value.map((u) => u._id);
