@@ -16,6 +16,10 @@ export const state = reactive({
   async getCurrentUser() {
     this.loading = true;
     try {
+      const token = this.getToken();
+      if (!token) {
+        throw "Unauthenticated";
+      }
       const { data } = await axios.get(
         process.env.VUE_APP_API_ENDPOINT + "/users/whoami",
         {
@@ -29,6 +33,7 @@ export const state = reactive({
       this.user = data;
     } catch (error) {
       console.log(error.response);
+      this.logout();
     } finally {
       this.loading = false;
     }
@@ -51,6 +56,7 @@ export const state = reactive({
       this.isAuthenticated = true;
     } catch (error) {
       console.log(error.response);
+      alert(error.response.data);
     } finally {
     }
   },
@@ -74,6 +80,7 @@ export const state = reactive({
       this.isAuthenticated = true;
     } catch (error) {
       console.log(error.response);
+      alert(error.response.data);
     } finally {
     }
   },
