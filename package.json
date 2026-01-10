@@ -11,7 +11,7 @@
     "@headlessui/vue": "^1.4.3",
     "@heroicons/vue": "^1.0.5",
     "@tailwindcss/line-clamp": "^0.3.1",
-    "axios": "^0.25.0",
+    "axios": "^0.30.2",
     "core-js": "^3.21.0",
     "emoji-mart-vue-fast": "^10.2.1",
     "vue": "^3.2.30",
